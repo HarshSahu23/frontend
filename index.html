@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>21BSA10129</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h2>API Input</h2>
+        <textarea id="jsonInput" placeholder='{"data":["M","1","334","4","B"]}'></textarea>
+        <button id="submitBtn">Submit</button>
+        <p id="error" class="error"></p>
+
+        <!-- Multi Filter Dropdown Section -->
+        <div id="dropdownSection" class="hidden">
+            <h3>Multi Filter</h3>
+            <select id="responseOptions" multiple>
+                <option value="alphabets">Alphabets</option>
+                <option value="numbers">Numbers</option>
+                <option value="highest_lowercase_alphabet">Highest Lowercase Alphabet</option>
+            </select>
+            <button id="showResponseBtn">Show Response</button>
+        </div>
+
+        <!-- Filtered Response Display Section -->
+        <h3>Filtered Response</h3>
+        <div id="responseDisplay"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
