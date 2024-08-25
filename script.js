@@ -22,7 +22,7 @@ document.getElementById('submitBtn').addEventListener('click', function () {
     }
 
     // If JSON is valid, call the REST API
-    fetch('http://localhost:8080/bfhl', {
+    fetch('https://bajafirebase-default-rtdb.firebaseio.com/', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
