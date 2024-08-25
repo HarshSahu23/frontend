@@ -1,62 +1,62 @@
 document.getElementById('submitBtn').addEventListener('click', function () {
-    const jsonInput = document.getElementById('jsonInput').value;
-    const errorElement = document.getElementById('error');
-    const dropdownSection = document.getElementById('dropdownSection');
-    const responseDisplay = document.getElementById('responseDisplay');
-    
-    // Reset error and response display
-    errorElement.textContent = '';
-    responseDisplay.innerHTML = '';
+            const jsonInput = document.getElementById('jsonInput').value;
+            const errorElement = document.getElementById('error');
+            const dropdownSection = document.getElementById('dropdownSection');
+            const responseDisplay = document.getElementById('responseDisplay');
+            
+            // Reset error and response display
+            errorElement.textContent = '';
+            responseDisplay.innerHTML = '';
 
-    // Validate JSON
-    let parsedJson;
-    try {
-        parsedJson = JSON.parse(jsonInput);
+            // Validate JSON
+            let parsedJson;
+            try {
+                parsedJson = JSON.parse(jsonInput);
 
-        if (!Array.isArray(parsedJson.data)) {
-            throw new Error("JSON must contain an array under 'data' key");
-        }
-    } catch (e) {
-        errorElement.textContent = `Invalid JSON: ${e.message}`;
-        return;
-    }
+                if (!Array.isArray(parsedJson.data)) {
+                    throw new Error("JSON must contain an array under 'data' key");
+                }
+            } catch (e) {
+                errorElement.textContent = `Invalid JSON: ${e.message}`;
+                return;
+            }
 
-    // If JSON is valid, call the REST API
-    fetch('https://bajafirebase-default-rtdb.firebaseio.com/', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(parsedJson)
-    })
-    .then(response => response.json())
-    .then(data => {
-        // Save the response data to a variable
-        window.responseData = data;
+            // Process the JSON data to generate a simulated response
+            const data = parsedJson.data;
+            const numbers = data.filter(item => !isNaN(item));
+            const alphabets = data.filter(item => isNaN(item));
+            const highestLowercaseAlphabet = alphabets.filter(item => item === item.toLowerCase());
 
-        // Show the dropdown section
-        dropdownSection.classList.remove('hidden');
-    })
-    .catch(error => {
-        errorElement.textContent = `Error: ${error.message}`;
-    });
-});
+            // Simulated response
+            window.responseData = {
+                is_success: true,
+                user_id: "harsh_sahu_04052003",
+                email: "harsh.sahu2021@vitbhopal.ac.in",
+                roll_number: "21BSA10129",
+                numbers: numbers,
+                alphabets: alphabets,
+                highest_lowercase_alphabet: highestLowercaseAlphabet
+            };
 
-document.getElementById('showResponseBtn').addEventListener('click', function () {
-    const selectedOptions = Array.from(document.getElementById('responseOptions').selectedOptions)
-                                 .map(option => option.value);
-    const responseDisplay = document.getElementById('responseDisplay');
-    const responseData = window.responseData;
+            // Show the dropdown section
+            dropdownSection.classList.remove('hidden');
+        });
 
-    responseDisplay.innerHTML = '';
+        document.getElementById('showResponseBtn').addEventListener('click', function () {
+            const selectedOptions = Array.from(document.getElementById('responseOptions').selectedOptions)
+                                         .map(option => option.value);
+            const responseDisplay = document.getElementById('responseDisplay');
+            const responseData = window.responseData;
 
-    // Render response based on selected options
-    selectedOptions.forEach(option => {
-        const value = responseData[option];
-        if (value) {
-            const p = document.createElement('p');
-            p.textContent = `${option.charAt(0).toUpperCase() + option.slice(1)}: ${Array.isArray(value) ? value.join(', ') : value}`;
-            responseDisplay.appendChild(p);
-        }
-    });
-});
+            responseDisplay.innerHTML = '';
+
+            // Render response based on selected options
+            selectedOptions.forEach(option => {
+                const value = responseData[option];
+                if (value) {
+                    const p = document.createElement('p');
+                    p.textContent = `${option.replace(/_/g, ' ').toUpperCase()}: ${Array.isArray(value) ? value.join(', ') : value}`;
+                    responseDisplay.appendChild(p);
+                }
+            });
+        });
